@@ -1,0 +1,80 @@
+{
+  "name": "@desert-ant-labs/shapes",
+  "version": "0.1.0",
+  "description": "On-device single-stroke shape recognition.",
+  "type": "module",
+  "main": "./dist/index.node.js",
+  "types": "./dist/index.node.d.ts",
+  "exports": {
+    ".": {
+      "browser": {
+        "types": "./dist/index.browser.d.ts",
+        "default": "./dist/index.browser.js"
+      },
+      "worker": {
+        "types": "./dist/index.browser.d.ts",
+        "default": "./dist/index.browser.js"
+      },
+      "workerd": {
+        "types": "./dist/index.browser.d.ts",
+        "default": "./dist/index.browser.js"
+      },
+      "edge-light": {
+        "types": "./dist/index.browser.d.ts",
+        "default": "./dist/index.browser.js"
+      },
+      "node": {
+        "types": "./dist/index.node.d.ts",
+        "default": "./dist/index.node.js"
+      },
+      "default": {
+        "types": "./dist/index.node.d.ts",
+        "default": "./dist/index.node.js"
+      }
+    },
+    "./core": {
+      "types": "./dist/model.d.ts",
+      "default": "./dist/model.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "node --import tsx --test test/*.test.ts",
+    "prepare": "npm run build",
+    "lint:publint": "publint --strict",
+    "lint:attw": "attw --pack . --profile esm-only",
+    "check:pkg": "npm run build && npm run lint:publint && npm run lint:attw"
+  },
+  "keywords": [
+    "shapes",
+    "shape-recognition",
+    "sketch",
+    "pen-input",
+    "pencilkit",
+    "on-device"
+  ],
+  "license": "SEE LICENSE IN LICENSE.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Desert-Ant-Labs/shapes-js.git"
+  },
+  "homepage": "https://github.com/Desert-Ant-Labs/shapes-js",
+  "engines": {
+    "node": ">=18"
+  },
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.4",
+    "@types/node": "^22",
+    "publint": "^0.3.21",
+    "tsx": "^4",
+    "typescript": "^5"
+  }
+}

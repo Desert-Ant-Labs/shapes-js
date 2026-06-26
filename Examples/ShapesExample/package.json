@@ -1,0 +1,25 @@
+{
+  "name": "shapes-example",
+  "version": "1.0.0",
+  "description": "A tldraw canvas that snaps hand-drawn strokes to shapes with @desert-ant-labs/shapes.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@desert-ant-labs/shapes": "file:../..",
+    "react": "^18",
+    "react-dom": "^18",
+    "tldraw": "^3"
+  },
+  "devDependencies": {
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@vitejs/plugin-react": "^4",
+    "typescript": "^5",
+    "vite": "^5"
+  }
+}

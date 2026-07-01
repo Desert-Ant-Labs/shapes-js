@@ -1,7 +1,7 @@
 # @desert-ant-labs/shapes
 
 On-device single-stroke shape recognition. Takes a hand-drawn stroke (a list of
-`[x, y]` points) and returns a clean geometric shape — fully in-process, no
+`[x, y]` points) and returns a clean geometric shape, fully in-process, no
 inference runtime.
 
 ```ts
@@ -14,11 +14,11 @@ const shape = await recognize(points); // points: [number, number][]
 
 ## Features
 
-- Pure-JS inference (no ONNX/WASM runtime) — recognition is a few ms
+- Pure-JS inference (no ONNX/WASM runtime); recognition is a few ms
 - Recognizes `line`, `rectangle`, `triangle`, `ellipse`, and `star` (rejects scribbles)
 - Fits clean vector geometry and snaps it to axes, circles, squares, and 15° rotations
 - Model (~0.2 MB, 4-bit palettized) is fetched from the Hugging Face Hub at a **pinned revision**, then
-  cached — to the **filesystem** on Node and to **Cache Storage** in the browser, so
+  cached, to the **filesystem** on Node and to **Cache Storage** in the browser, so
   it loads once and runs offline after
 
 ## Install
@@ -29,8 +29,8 @@ npm install @desert-ant-labs/shapes
 
 ## Importing
 
-Pure ESM and fully tree-shakeable. The **same import works everywhere** — Node, bundlers,
-browsers, and edge/worker runtimes — the right build is selected automatically:
+Pure ESM and fully tree-shakeable. The **same import works everywhere** (Node, bundlers,
+browsers, and edge/worker runtimes); the right build is selected automatically:
 
 ```ts
 import { recognize } from "@desert-ant-labs/shapes";
@@ -40,7 +40,7 @@ CommonJS consumers use dynamic import (`const { recognize } = await import("@des
 native `require()` works on Node ≥ 22.12.
 
 **Bring-your-own-bytes.** If you load the model files yourself, import the hub-free core
-from `@desert-ant-labs/shapes/core` — only the inference engine, with zero network/filesystem code:
+from `@desert-ant-labs/shapes/core`, only the inference engine, with zero network/filesystem code:
 
 ```ts
 import { createShapes } from "@desert-ant-labs/shapes/core";
@@ -112,4 +112,4 @@ Published at [`desert-ant-labs/shapes`](https://huggingface.co/desert-ant-labs/s
 
 ## License
 
-See [`LICENSE.md`](LICENSE.md) — Desert Ant Labs Source-Available License v1.0. Free for commercial use up to 100,000 MAU per Model; <licensing@desertant.ai> above that.
+See [`LICENSE.md`](LICENSE.md). Desert Ant Labs Source-Available License v1.0. Free for commercial use up to 100,000 MAU per Model; contact <licensing@desertant.ai> above that.

@@ -2,8 +2,9 @@ import { createShapes, ShapesModel, type ShapesMeta } from "./model.js";
 
 export const DEFAULT_HOST = "https://huggingface.co";
 export const DEFAULT_REPO = "desert-ant-labs/shapes";
-/** Pinned revision of the model repo (a commit SHA). */
-export const DEFAULT_REVISION = "2a45f451571c17cfd86d52e063d98e724036881d";
+/** Pinned revision of the model repo. A tag (not a bare commit SHA) so it
+ * survives history rewrites/squashes on the model repo. */
+export const DEFAULT_REVISION = "v0.1.0";
 
 const FILES = ["shapes.safetensors", "shapes_meta.json"] as const;
 

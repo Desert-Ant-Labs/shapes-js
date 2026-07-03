@@ -112,4 +112,6 @@ Published at [`desert-ant-labs/shapes`](https://huggingface.co/desert-ant-labs/s
 
 ## License
 
-See [`LICENSE.md`](LICENSE.md). Desert Ant Labs Source-Available License v1.0. Free for commercial use up to 100,000 MAU per Model; contact <licensing@desertant.ai> above that.
+[Desert Ant Labs Source-Available License](https://license.desertant.ai/1.0). Free for
+most apps; a commercial license is required at scale. Full terms are at the link.
+Licensing: <licensing@desertant.ai>.

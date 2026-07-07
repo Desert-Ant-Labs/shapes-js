@@ -70,6 +70,9 @@
   "publishConfig": {
     "access": "public"
   },
+  "dependencies": {
+    "@desert-ant-labs/dal-usage-web": "^0.1.0"
+  },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.4",
     "@types/node": "^22",

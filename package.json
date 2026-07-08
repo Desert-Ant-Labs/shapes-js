@@ -54,8 +54,15 @@
     "shape-recognition",
     "sketch",
     "pen-input",
-    "pencilkit",
-    "on-device"
+    "on-device",
+    "typescript",
+    "browser",
+    "canvas",
+    "tldraw",
+    "sketch-recognition",
+    "single-stroke",
+    "unistroke",
+    "digital-ink"
   ],
   "license": "SEE LICENSE IN LICENSE.md",
   "repository": {

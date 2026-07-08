@@ -1,8 +1,11 @@
 # @desert-ant-labs/shapes
 
+**On-device single-stroke shape recognition for Node and the browser. Pure JS, no ONNX or WASM runtime.**
+
 On-device single-stroke shape recognition. Takes a hand-drawn stroke (a list of
 `[x, y]` points) and returns a clean geometric shape, fully in-process, no
-inference runtime.
+inference runtime. It does sketch recognition on raw digital ink: one stroke in,
+one snapped vector shape out.
 
 ```ts
 import { recognize } from "@desert-ant-labs/shapes";
@@ -109,6 +112,14 @@ npm run dev
 ## Model
 
 Published at [`desert-ant-labs/shapes`](https://huggingface.co/desert-ant-labs/shapes) on Hugging Face.
+
+## Other platforms
+
+Same model, native on each platform:
+
+- [`shapes-swift`](https://github.com/Desert-Ant-Labs/shapes-swift): Swift for iOS and macOS, with PencilKit stroke snapping
+- [`shapes-kotlin`](https://github.com/Desert-Ant-Labs/shapes-kotlin): Kotlin for Android and the JVM
+- Model weights and card: [`desert-ant-labs/shapes`](https://huggingface.co/desert-ant-labs/shapes)
 
 ## License
 

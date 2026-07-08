@@ -1,3 +1,5 @@
+import { initUsage, type UsageClient } from "@desert-ant-labs/desert-ant-web";
+
 import { webCache } from "./cache-web.js";
 import { DEFAULT_HOST, DEFAULT_REPO, DEFAULT_REVISION, type ShapesEnv, loadModel } from "./hub.js";
 import { type ShapesModel } from "./model.js";
@@ -25,6 +27,13 @@ export async function load(options: Partial<ShapesEnv> = {}): Promise<ShapesMode
 
 let modelPromise: Promise<ShapesModel> | null = null;
 
+// TODO(prod): switch to the production ingest URL once prod infra is deployed.
+const USAGE_ENDPOINT = "https://staging.platform.desertant.ai/api/v1/ingest";
+
+// Keyless usage (the browser Origin identifies the site), created lazily on first
+// recognize. Only the hub-loaded path is counted; /core stays network-free.
+let usage: UsageClient | null = null;
+
 /**
  * Recognizes a single stroke (ordered `[x, y]` points) as a clean {@link Shape},
  * or `null` if rejected. The model is loaded (and cached) lazily on first call.
@@ -36,7 +45,10 @@ export async function recognize(points: Point[]): Promise<Shape | null> {
       throw err;
     });
   }
-  return (await modelPromise).recognize(points);
+  usage ??= initUsage({ endpoint: USAGE_ENDPOINT });
+  const shape = await (await modelPromise).recognize(points);
+  usage.recordCall();
+  return shape;
 }
 
 /** Clears the memoized model so the next {@link recognize} call re-reads `env`. */

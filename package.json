@@ -71,7 +71,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@desert-ant-labs/dal-usage-web": "^0.1.0"
+    "@desert-ant-labs/desert-ant-web": "^0.1.0"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.4",

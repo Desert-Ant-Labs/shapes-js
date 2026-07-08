@@ -1,4 +1,4 @@
-import { initUsage, type UsageClient } from "@desert-ant-labs/dal-usage-web";
+import { initUsage, type UsageClient } from "@desert-ant-labs/desert-ant-web";
 
 import { webCache } from "./cache-web.js";
 import { DEFAULT_HOST, DEFAULT_REPO, DEFAULT_REVISION, type ShapesEnv, loadModel } from "./hub.js";

@@ -1,6 +1,6 @@
 {
   "name": "@desert-ant-labs/shapes",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "On-device single-stroke shape recognition.",
   "type": "module",
   "main": "./dist/index.node.js",

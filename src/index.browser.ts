@@ -19,20 +19,35 @@ export const env: ShapesEnv = {
   useCache: true,
 };
 
-/** Loads the model from the Hugging Face Hub (cached in Cache Storage). */
-export async function load(options: Partial<ShapesEnv> = {}): Promise<ShapesModel> {
-  const e = { ...env, ...options };
-  return loadModel(e, e.useCache ? webCache() : null);
-}
-
-let modelPromise: Promise<ShapesModel> | null = null;
-
 // TODO(prod): switch to the production ingest URL once prod infra is deployed.
 const USAGE_ENDPOINT = "https://staging.platform.desertant.ai/api/v1/ingest";
 
-// Keyless usage (the browser Origin identifies the site), created lazily on first
-// recognize. Only the hub-loaded path is counted; /core stays network-free.
+// Keyless usage (the browser Origin identifies the site), created lazily on the
+// first recognition. Every model returned by load() is counted; /core
+// (createShapes) is never wrapped, so bring-your-own-bytes callers stay
+// network-free.
 let usage: UsageClient | null = null;
+
+// Wrap a hub-loaded model so each recognize() reports one usage call. Counts both
+// the top-level recognize() and the load() + model.recognize() pattern.
+function instrument(model: ShapesModel): ShapesModel {
+  const recognize = model.recognize.bind(model);
+  model.recognize = (points) => {
+    usage ??= initUsage({ endpoint: USAGE_ENDPOINT });
+    const shape = recognize(points);
+    usage.recordCall();
+    return shape;
+  };
+  return model;
+}
+
+/** Loads the model from the Hugging Face Hub (cached in Cache Storage). */
+export async function load(options: Partial<ShapesEnv> = {}): Promise<ShapesModel> {
+  const e = { ...env, ...options };
+  return instrument(await loadModel(e, e.useCache ? webCache() : null));
+}
+
+let modelPromise: Promise<ShapesModel> | null = null;
 
 /**
  * Recognizes a single stroke (ordered `[x, y]` points) as a clean {@link Shape},
@@ -45,10 +60,8 @@ export async function recognize(points: Point[]): Promise<Shape | null> {
       throw err;
     });
   }
-  usage ??= initUsage({ endpoint: USAGE_ENDPOINT });
-  const shape = await (await modelPromise).recognize(points);
-  usage.recordCall();
-  return shape;
+  // The model from load() is already instrumented, so this counts exactly once.
+  return (await modelPromise).recognize(points);
 }
 
 /** Clears the memoized model so the next {@link recognize} call re-reads `env`. */

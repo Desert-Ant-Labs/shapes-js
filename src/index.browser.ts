@@ -19,8 +19,8 @@ export const env: ShapesEnv = {
   useCache: true,
 };
 
-// TODO(prod): switch to the production ingest URL once prod infra is deployed.
-const USAGE_ENDPOINT = "https://staging.platform.desertant.ai/api/v1/ingest";
+// Production usage ingest. Point at staging.platform.desertant.ai when testing.
+const USAGE_ENDPOINT = "https://platform.desertant.ai/api/v1/ingest";
 
 // Keyless usage (the browser Origin identifies the site), created lazily on the
 // first recognition. Every model returned by load() is counted; /core

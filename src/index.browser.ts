@@ -19,21 +19,14 @@ export const env: ShapesEnv = {
   useCache: true,
 };
 
-// Production usage ingest. Point at staging.platform.desertant.ai when testing.
-const USAGE_ENDPOINT = "https://platform.desertant.ai/api/v1/ingest";
+const USAGE_KEY = "dal_lEL3EuFU2eh8IRTH8RW9pV9czYn0TrCk";
 
-// Keyless usage (the browser Origin identifies the site), created lazily on the
-// first recognition. Every model returned by load() is counted; /core
-// (createShapes) is never wrapped, so bring-your-own-bytes callers stay
-// network-free.
 let usage: UsageClient | null = null;
 
-// Wrap a hub-loaded model so each recognize() reports one usage call. Counts both
-// the top-level recognize() and the load() + model.recognize() pattern.
 function instrument(model: ShapesModel): ShapesModel {
   const recognize = model.recognize.bind(model);
   model.recognize = (points) => {
-    usage ??= initUsage({ endpoint: USAGE_ENDPOINT });
+    usage ??= initUsage({ key: USAGE_KEY });
     const shape = recognize(points);
     usage.recordCall();
     return shape;

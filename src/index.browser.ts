@@ -19,14 +19,12 @@ export const env: ShapesEnv = {
   useCache: true,
 };
 
-const USAGE_KEY = "dal_lEL3EuFU2eh8IRTH8RW9pV9czYn0TrCk";
-
 let usage: UsageClient | null = null;
 
-function instrument(model: ShapesModel): ShapesModel {
+function instrument(model: ShapesModel, usageKey?: string): ShapesModel {
   const recognize = model.recognize.bind(model);
   model.recognize = (points) => {
-    usage ??= initUsage({ key: USAGE_KEY });
+    usage ??= initUsage({ key: usageKey });
     const shape = recognize(points);
     usage.recordCall();
     return shape;
@@ -35,9 +33,9 @@ function instrument(model: ShapesModel): ShapesModel {
 }
 
 /** Loads the model from the Hugging Face Hub (cached in Cache Storage). */
-export async function load(options: Partial<ShapesEnv> = {}): Promise<ShapesModel> {
+export async function load(options: Partial<ShapesEnv> & { usageKey?: string } = {}): Promise<ShapesModel> {
   const e = { ...env, ...options };
-  return instrument(await loadModel(e, e.useCache ? webCache() : null));
+  return instrument(await loadModel(e, e.useCache ? webCache() : null), options.usageKey);
 }
 
 let modelPromise: Promise<ShapesModel> | null = null;
